@@ -1,6 +1,6 @@
-# codex-mcp-bridge
+# dev-agent-runner
 
-A small, local-only HTTP daemon that wraps the `codex mcp-server` process (stdio) and provides:
+A small, local-only HTTP daemon that wraps developer-agent backends (starting with `codex mcp-server`) and provides:
 
 - **Stable sessions** (`sessionId`) with persisted history (thread IDs are ephemeral)
 - **Optional Bearer token auth**
@@ -14,6 +14,9 @@ This repo also contains **OpenClaw integration notes** and helper scripts.
 - `systemd/` — service unit files (Linux)
 - `tools/` — helper scripts (health check, update codex + restart)
 - `docs/` — design notes
+
+> Note: the directory name `skills/codex-mcp-bridge/` is kept for backward compatibility in this repo’s first iteration.
+> The long-term goal is a provider-based layout (Codex/OpenCode/Claude Code, etc.).
 
 ## Quick start (foreground)
 
