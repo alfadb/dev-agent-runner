@@ -1,0 +1,27 @@
+[Unit]
+Description=Codex MCP Bridge (local HTTP -> codex mcp-server)
+After=network.target
+
+[Service]
+Type=simple
+Environment=HOME=/home/alfadb
+# Optional: put CODEXD_TOKEN and (if needed) PATH in the env file.
+# For nvm-managed node/npm, it's common to set PATH here so `codex` can be resolved.
+EnvironmentFile=-%h/.config/openclaw/codex-mcp-bridge.env
+WorkingDirectory=/home/alfadb/.openclaw/workspace
+
+# Deterministic: rely on PATH from EnvironmentFile so systemd can always find `codex`.
+ExecStart=/usr/bin/env python3 /home/alfadb/.openclaw/workspace/skills/codex-mcp-bridge/scripts/codexd.py \
+  --host 127.0.0.1 \
+  --port 8787 \
+  --cwd /home/alfadb/.openclaw/workspace \
+  --store-dir /home/alfadb/.openclaw/state/codex-mcp-bridge \
+  --token ${CODEXD_TOKEN}
+
+Restart=on-failure
+RestartSec=2
+TimeoutStopSec=180
+KillMode=mixed
+
+[Install]
+WantedBy=default.target
